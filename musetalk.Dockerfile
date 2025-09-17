@@ -18,12 +18,13 @@ ENV PATH="/opt/conda/bin:$PATH"
 
 
 # RUN conda install -y tensorflow==2.12.0 tensorboard==2.12.0 opencv-python=4.9.0.80 librosa==0.11.0
-COPY --from=REPO /app/accelerate-0.34.2+corex.4.3.0-py3-none-any.whl /app/accelerate-0.34.2+corex.4.3.0-py3-none-any.whl
-COPY --from=REPO /app/opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz /app/opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz
-COPY --from=REPO /app/tensorflow-2.16.2+corex.4.3.0-cp310-cp310-linux_x86_64.whl /app/tensorflow-2.16.2+corex.4.3.0-cp310-cp310-linux_x86_64.whl
+COPY --from=REPO /app/* /app/
+# COPY --from=REPO /app/corex/accelerate-0.34.2+corex.4.3.0-py3-none-any.whl /app/accelerate-0.34.2+corex.4.3.0-py3-none-any.whl
+# COPY --from=REPO /app/corex/opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz /app/opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz
+# COPY --from=REPO /app/corex/tensorflow-2.16.2+corex.4.3.0-cp310-cp310-linux_x86_64.whl /app/tensorflow-2.16.2+corex.4.3.0-cp310-cp310-linux_x86_64.whl
 
 # tar 解压opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz 到/app目录下，然后把bin目录加入到PATH
-RUN tar -zxvf opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz -C /app && \
+RUN tar -zxvf /app/corex/opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz -C /app && \
     export PATH=$PATH:/app/opencv-4.6.0-corex.4.3.0-linux_x86_64/bin 
 
 # 删除无用的文件
@@ -31,11 +32,11 @@ RUN tar -zxvf opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz -C /app && \
 RUN pip install accelerate-0.34.2+corex.4.3.0-py3-none-any.whl
 RUN pip install tensorflow-2.16.2+corex.4.3.0-cp310-cp310-linux_x86_64.whl
 
-COPY --from=REPO /app/musetalk/corex_requirements.txt /app/corex_requirements.txt
+
 RUN pip install --upgrade pip
 RUN pip install -r corex_requirements.txt --upgrade --upgrade-strategy only-if-needed --no-deps  
 
-COPY --from=REPO /app/musetalk/* /app/
+
 RUN rm -rf /app/corex
 RUN rm *.tgz *.whl
 RUN sh ./download_weights.sh
