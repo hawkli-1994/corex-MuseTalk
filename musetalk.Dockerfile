@@ -18,9 +18,9 @@ ENV PATH="/opt/conda/bin:$PATH"
 
 
 # RUN conda install -y tensorflow==2.12.0 tensorboard==2.12.0 opencv-python=4.9.0.80 librosa==0.11.0
-COPY --from=REPO corex/accelerate-0.34.2+corex.4.3.0-py3-none-any.whl /app/accelerate-0.34.2+corex.4.3.0-py3-none-any.whl
-COPY --from=REPO corex/opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz /app/opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz
-COPY --from=REPO corex/tensorflow-2.16.2+corex.4.3.0-cp310-cp310-linux_x86_64.whl /app/tensorflow-2.16.2+corex.4.3.0-cp310-cp310-linux_x86_64.whl
+COPY --from=REPO /app/accelerate-0.34.2+corex.4.3.0-py3-none-any.whl /app/accelerate-0.34.2+corex.4.3.0-py3-none-any.whl
+COPY --from=REPO /app/opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz /app/opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz
+COPY --from=REPO /app/tensorflow-2.16.2+corex.4.3.0-cp310-cp310-linux_x86_64.whl /app/tensorflow-2.16.2+corex.4.3.0-cp310-cp310-linux_x86_64.whl
 
 # tar 解压opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz 到/app目录下，然后把bin目录加入到PATH
 RUN tar -zxvf opencv-4.6.0-corex.4.3.0-linux_x86_64.tgz -C /app && \
