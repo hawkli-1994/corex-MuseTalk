@@ -34,3 +34,8 @@ RUN pip install tensorflow-2.16.2+corex.4.3.0-cp310-cp310-linux_x86_64.whl
 COPY --from=REPO /app/musetalk/corex_requirements.txt /app/corex_requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r corex_requirements.txt --upgrade --upgrade-strategy only-if-needed --no-deps  
+
+COPY --from=REPO /app/musetalk/* /app/
+RUN rm -rf /app/corex
+RUN rm *.tgz *.whl
+RUN sh ./download_weights.sh
