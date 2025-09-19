@@ -40,3 +40,6 @@ RUN pip install -r corex_requirements.txt --upgrade --upgrade-strategy only-if-n
 RUN rm -rf /app/corex
 RUN rm *.tgz *.whl
 RUN sh ./download_weights.sh
+# numpy==1.23.5
+# librosa==0.11.0
+RUN pip install moviepy tensorboard megatron-deepspeed audioread lazy_loader "numpy>=1.24,<2.2" pooch soxr opencv-python==4.6.0.66 compressed-tensors==0.9.2 "opencv-python-headless>=4.11.0" omegaconf "tokenizers>=0.22.0,<=0.23.0"
